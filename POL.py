@@ -16,13 +16,13 @@ def sendToRatings(corpid):
         global server
         query = 'match (c:Corp) where id(c)=%s call apoc.path.subgraphAll(c,{maxLevel:1,labelFilter: "CorpName|Person|Address|ID|Metric|Firmographic|ContactInfo|Phone|Website|Email|Rating|OnlineAccount|Event|Alert|Inspection|Category|Designation|Activity|ClusterType|End|Start|MatchResult"}) yield nodes, relationships  with nodes unwind(nodes) as node with  id(node) as id, %s as corp_id, labels(node) as label0,node unwind label0 as label return id, corp_id,label,node' % (corpid,corpid)
         try:
-            g = Graph('bolt://%s' % server, user='system', password='Xg6wF3eDKzsK<2=;')
+            g = Graph('bolt://%s' % server, user='***', password='***')
             data = g.run(query).data()
         except Exception as e:
             time.sleep(10)
             server = kumihotools.checkwriter()
             print('change neo server to ',server)
-            g = Graph('bolt://%s' % server, user='system', password='Xg6wF3eDKzsK<2=;')
+            g = Graph('bolt://%s' % server, user='***', password='***')
             data = g.run(query).data()
         if data:
             kumihotools.sendQ(json.dumps(data,ensure_ascii=False),'KumihoEyeRating_BBB2')
